@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "ai medical report"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.115.11"
+python-multipart = "^0.0.20"
+python-dotenv = "^1.0.1"
+openai-whisper = "^20240930"
+langchain-sambanova = "^0.1.2"
+langchain-core = "^0.3.40"
+markdown = "^3.7"
+starlette = "^0.46.0"
+uvicorn = "^0.34.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

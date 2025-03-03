@@ -6,3 +6,4 @@ langchain-sambanova
 langchain-core 
 markdown 
 starlette
+uvicorn

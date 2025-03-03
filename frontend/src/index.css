@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-gray-100 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 min-h-screen;
+    background-attachment: fixed;
+  }
+}
+
+.glass-morphism {
+  @apply bg-white/10 backdrop-blur-lg border border-white/20;
+}
+
+.glass-button {
+  @apply backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300;
+}
+
+.glass-card {
+  @apply backdrop-blur-xl bg-white/10 border border-white/20 shadow-xl;
+}
+
+.radial-gradient {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+}

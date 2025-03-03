@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "ai summarizer"
+version = "0.1.0"
+description = "\" The app allows users to either upload an audio file or record audio, which is then processed by a FastAPI backend to extract a medical summary\""
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+langchain-sambanova = "^0.1.2"
+fastapi = "^0.115.8"
+uvicorn = "^0.34.0"
+whisper = "^1.1.10"
+fpdf = "^1.7.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

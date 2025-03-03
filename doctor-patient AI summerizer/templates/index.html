@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Conversation Recorder</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+        h1, h2 { color: #333; }
+        button { padding: 10px; margin: 10px 0; cursor: pointer; }
+        #summary { margin-top: 20px; border: 1px solid #ddd; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Medical Conversation Recorder</h1>
+    <div>
+        <h2>Upload Audio File</h2>
+        <input type="file" id="audioFile" accept="audio/*">
+        <button onclick="uploadAudio()">Upload</button>
+    </div>
+    <div>
+        <h2>Record Live Conversation</h2>
+        <button id="recordButton">Start Recording</button>
+    </div>
+    <div id="summary"></div>
+    <div id="downloadLink"></div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+        document.getElementById('recordButton').addEventListener('click', toggleRecording);
+
+        function toggleRecording() {
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                document.getElementById('recordButton').textContent = 'Start Recording';
+            } else {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        mediaRecorder = new MediaRecorder(stream);
+                        mediaRecorder.start();
+                        document.getElementById('recordButton').textContent = 'Stop Recording';
+
+                        mediaRecorder.addEventListener("dataavailable", event => {
+                            audioChunks.push(event.data);
+                        });
+
+                        mediaRecorder.addEventListener("stop", () => {
+                            const audioBlob = new Blob(audioChunks);
+                            audioChunks = [];
+                            sendAudioToServer(audioBlob);
+                        });
+                    });
+            }
+        }
+
+        function uploadAudio() {
+            const fileInput = document.getElementById('audioFile');
+            const file = fileInput.files[0];
+            if (file) {
+                sendAudioToServer(file);
+            }
+        }
+
+        function sendAudioToServer(audioData) {
+            const formData = new FormData();
+            formData.append('file', audioData);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                displaySummary(data.summary);
+                document.getElementById('downloadLink').innerHTML = `<a href="/download_pdf">Download PDF Summary</a>`;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function displaySummary(summary) {
+            const summaryDiv = document.getElementById('summary');
+            summaryDiv.innerHTML = `
+                <h3>Summary</h3>
+                <p><strong>Symptoms:</strong> ${summary.symptoms}</p>
+                <p><strong>Doctor's Advice:</strong> ${summary.advice}</p>
+                <p><strong>Medication:</strong> ${summary.medication}</p>
+                <p><strong>Additional Notes:</strong> ${summary.additional_notes}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

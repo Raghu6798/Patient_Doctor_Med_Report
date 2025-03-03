@@ -1,0 +1,8 @@
+fastapi 
+python-multipart 
+python-dotenv 
+openai-whisper 
+langchain-sambanova 
+langchain-core 
+markdown 
+starlette

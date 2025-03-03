@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.8,<3.12"
 fastapi = "^0.115.11"
 python-multipart = "^0.0.20"
 python-dotenv = "^1.0.1"
@@ -17,6 +17,8 @@ langchain-core = "^0.3.40"
 markdown = "^3.7"
 starlette = "^0.46.0"
 uvicorn = "^0.34.0"
+llvmlite = "^0.34.0"
+
 
 
 [build-system]
